@@ -2,6 +2,7 @@
 #include "CipherMode.hpp"
 #include "Alphabet.hpp"
 #include <algorithm>
+#include <string>
 
 VigenereCipher::VigenereCipher(const std::string& key) {
     setKey(key);
@@ -40,6 +41,17 @@ void VigenereCipher::setKey(const std::string& key) {
     }
 }
 
-std::string VigenereCipher::applyCipher(const std::string& inputText, const CipherMode /*cipherMode*/) const {
-    return inputText;
+std::string VigenereCipher::applyCipher(const std::string& inputText, const CipherMode cipherMode) const {
+    // Initially make output text a copy of the input text
+    std::string outputText{""};
+    // for each letter in the input text
+    for (std::size_t i{0}; i < inputText.size(); i++) {
+        // find corresponding letter in the key (repeats/truncates as needed)
+        // find caesar cipher from lookup
+        const CaesarCipher& thisCipher {charLookup_.at(key_[i % key_.size()])};
+        // run the encrypt/decrypt and add to the output text
+        const std::string cipherInput {inputText[i]};
+        outputText += thisCipher.applyCipher(cipherInput, cipherMode);
+    }
+    return outputText;
 }
