@@ -17,12 +17,7 @@ void VigenereCipher::setKey(const std::string& key) {
 
     // Remove non-alphabetic characters
     key_.erase(std::remove_if(std::begin(key_), std::end(key_), [&] (char c) {
-        if (Alphabet::alphabet.find(c) == std::string::npos) {
-            // The character was not found inside the alphabet
-            return true;
-        } else {
-            return false;
-        }
+        return !std::isalpha(c);
     }), std::end(key_));
 
     // Check if the key is empty, if it is replace with a default key
@@ -30,9 +25,14 @@ void VigenereCipher::setKey(const std::string& key) {
         key_ = "KEY";
     }
 
+    // Empty the map in-case it isn't 
+    charLookup_.clear();
     // Loop over the key
-    for (char& c : key_) {
+    for (const char c : key_) {
         // find the letter position in the alphabet
+        if (charLookup_.find(c) != charLookup_.end()) {
+            continue;
+        }
         const std::size_t charIndex {Alphabet::alphabet.find(c)};
         // create caesarcipher using this position as a key
         const CaesarCipher cipher {charIndex};
