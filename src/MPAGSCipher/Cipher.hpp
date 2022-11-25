@@ -15,7 +15,7 @@ class Cipher {
         Cipher& operator=(const Cipher& rhs) = default;
         Cipher& operator=(Cipher&& rhs) = default;
         virtual ~Cipher() = default;
-        virtual std::string applyCipher(std::string& inputText, const CipherMode cipherMode) const = 0;
+        virtual std::string applyCipher(const std::string& inputText, const CipherMode cipherMode) const = 0;
         // Equals zero used to tell the compiler that the function is pure virtual i.e. no implementation
         // is provided for the method
 };

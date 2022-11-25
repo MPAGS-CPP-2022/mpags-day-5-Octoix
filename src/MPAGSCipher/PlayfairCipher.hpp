@@ -2,6 +2,7 @@
 #define MPAGSCIPHER_PLAYFAIRCIPHER_HPP
 
 #include "CipherMode.hpp"
+#include "Cipher.hpp"
 
 #include <map>
 #include <string>
@@ -15,7 +16,7 @@
  * \class PlayfairCipher
  * \brief Encrypt or decrypt text using the Playfair cipher with the given key
  */
-class PlayfairCipher {
+class PlayfairCipher : public Cipher {
   public:
     /**
      * \brief Create a new PlayfairCipher with the given key
@@ -38,8 +39,8 @@ class PlayfairCipher {
      * \param cipherMode whether to encrypt or decrypt the input text
      * \return the result of applying the cipher to the input text
      */
-    std::string applyCipher(const std::string& inputText,
-                            const CipherMode cipherMode) const;
+    virtual std::string applyCipher(const std::string& inputText,
+                            const CipherMode cipherMode) const override;
 
   private:
     /// The grid size
