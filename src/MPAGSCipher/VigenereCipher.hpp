@@ -1,7 +1,9 @@
 #ifndef VIGENERE_HPP
 #define VIGENERE_HPP
 #include "CipherMode.hpp"
+#include "CaesarCipher.hpp"
 #include <string>
+#include <map>
 
 /**
  * \file VigenereCipher.hpp
@@ -39,6 +41,8 @@ class VigenereCipher {
     private:
         // The cipher key
         std::string key_;
+        // Lookup map of Caesar cipher's associated with corresponding char
+        std::map<char, CaesarCipher> charLookup_;
 };
 
 #endif
