@@ -4,6 +4,8 @@
 add_library(MPAGSCipher STATIC
   Alphabet.hpp
   Cipher.hpp
+  CipherFactory.hpp
+  CipherFactory.cpp
   VigenereCipher.hpp
   VigenereCipher.cpp
   CaesarCipher.hpp

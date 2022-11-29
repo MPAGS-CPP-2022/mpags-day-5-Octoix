@@ -98,6 +98,21 @@ bool processCommandLine(const std::vector<std::string>& cmdLineArgs,
                 }
                 ++i;
             }
+        } else if (cmdLineArgs[i] == "--multi-cipher") {
+            // Handle multi-cipher option
+            // Next element is the number of ciphers unless this is the last argument
+            if (i == nCmdLineArgs - 1) {
+                std::cerr << "[error] --multi-cipher requires a positive integer argument"
+                          << std::endl;
+                // Set the flag to indicate the error and terminate the loop
+                processStatus = false;
+                break;
+            } else {
+                // Got the key, so assign the value and advance past it
+                
+                settings.nExpectedCiphers = unsigned(abs(std::stoi(cmdLineArgs[i+1])));
+                ++i;
+            }
         } else {
             // Have encoutered an unknown flag, output an error message,
             // set the flag to indicate the error and terminate the loop
@@ -122,8 +137,9 @@ bool processCommandLine(const std::vector<std::string>& cmdLineArgs,
     // Check that we have information on the expected number of ciphers
     const std::size_t nTypes{settings.cipherType.size()};
     const std::size_t nKeys{settings.cipherKey.size()};
-    if (nTypes != nExpectedCiphers || nKeys != nExpectedCiphers) {
-        std::cerr << "[error] expected types and keys for " << nExpectedCiphers
+
+    if (nTypes != settings.nExpectedCiphers || nKeys != settings.nExpectedCiphers) {
+        std::cerr << "[error] expected types and keys for " << settings.nExpectedCiphers
                   << " ciphers\n"
                   << "        but received " << nTypes << " types and " << nKeys
                   << " keys" << std::endl;
